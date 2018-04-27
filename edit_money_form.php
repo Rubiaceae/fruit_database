@@ -7,13 +7,12 @@ session_start();
 
 function getorderlist_withconsignee_date($consignee_id,$date){#查詢所有表join，有特定行口編號與日期，尚未設定金錢
 	include("mysql_connect.inc.php");
-	$sql = 'SELECT * FROM fruit_database.order_list, fruit_database.trucking_list,fruit_database.shipper_list,
-fruit_database.consignee_list,fruit_database.driver_list
-where trucking_list.trucking_id=order_list.trucking_id 
-and shipper_list.shipper_id=order_list.shipper_id 
-and consignee_list.consignee_id=order_list.consignee_id 
-and driver_list.driver_id=order_list.driver_id
-and order_list.consignee_id=\''.$consignee_id.'\'
+	$sql = 'SELECT * FROM fruit_database.order_list
+left join fruit_database.trucking_list  on trucking_list.trucking_id=order_list.trucking_id 
+left join fruit_database.shipper_list  on shipper_list.shipper_id=order_list.shipper_id 
+left join fruit_database.consignee_list  on consignee_list.consignee_id=order_list.consignee_id
+left join fruit_database.driver_list  on driver_list.driver_id=order_list.driver_id
+where order_list.consignee_id=\''.$consignee_id.'\'
 and order_list.date=\''.$date.'\'
 and consignee_money is null
 order by order_list.driver_trip, order_list.consignee_id
@@ -31,13 +30,13 @@ order by order_list.driver_trip, order_list.consignee_id
 
 function getorderlist_withconsignee_date_money($consignee_id,$date){#查詢所有表join，有特定行口編號與日期，已設定金錢
 	include("mysql_connect.inc.php");
-	$sql = 'SELECT * FROM fruit_database.order_list, fruit_database.trucking_list,fruit_database.shipper_list,
-fruit_database.consignee_list,fruit_database.driver_list
-where trucking_list.trucking_id=order_list.trucking_id 
-and shipper_list.shipper_id=order_list.shipper_id 
-and consignee_list.consignee_id=order_list.consignee_id 
-and driver_list.driver_id=order_list.driver_id
-and order_list.consignee_id=\''.$consignee_id.'\'
+	$sql = '
+SELECT * FROM fruit_database.order_list
+left join fruit_database.trucking_list  on trucking_list.trucking_id=order_list.trucking_id 
+left join fruit_database.shipper_list  on shipper_list.shipper_id=order_list.shipper_id 
+left join fruit_database.consignee_list  on consignee_list.consignee_id=order_list.consignee_id
+left join fruit_database.driver_list  on driver_list.driver_id=order_list.driver_id
+where order_list.consignee_id=\''.$consignee_id.'\'
 and order_list.date=\''.$date.'\'
 and consignee_money is not null
 order by order_list.driver_trip, order_list.consignee_id
