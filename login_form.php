@@ -26,6 +26,7 @@ if(isset($_SESSION['name']) && !empty($_SESSION['name'])) {
 	echo "已經登入了,".$_SESSION['name'];
 	returntoindex(500);
 }else{
+	$_SESSION['refurl']=$_SERVER['HTTP_REFERER'];
 	echo '<form action="login_receive.php" method="post">';
 	echo '帳號:<br>';
 	echo '<input type="text" name="name"><br>';
@@ -33,5 +34,6 @@ if(isset($_SESSION['name']) && !empty($_SESSION['name'])) {
 	echo '<input type="password" name="password"><br>';
 	echo '<input type="submit" value="登入">';
 	echo '</form>';
+	#echo $_SESSION['refurl'];
 }
 ?>
