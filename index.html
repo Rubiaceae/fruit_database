@@ -6,16 +6,25 @@
 </head>
 
 <body>
-	<a href="order_list_form.php">新增訂單</a>
-	</br>
-	<a href="add_new_form.php">新增貨運行、貨主、司機、行口</a>
-	</br>
-	<a href="choose_driver_form.php">司機分配訂單</a>
-	</br>
-	<a href="print_driver_table.php">列印司機訂單</a>
-	</br>
-	<a href="edit_money_form.php">行口運金計算</a>
-	</br>
+<h1>鉦發貨運訂單管理系統</h1>
+	<table border=1>
+		<tr>
+			<td>新增</td>
+			<td>分配與金額</td>
+			<td>列印</td>
+			<td>帳務</td>
+		</tr>
+		<tr>
+		<td><a href="order_list_form.php">新增訂單</a></br>
+			<a href="add_new_form.php">新增貨運行、貨主、司機、行口</a></td>
+
+		<td><a href="choose_driver_form.php">分配司機訂單</a></br>
+			<a href="edit_money_form.php">編輯行口運金</a>	</td>
+
+		<td><a href="print_driver_table.php">列印司機訂單</a></br>
+			<a href="print_trucking_form.php">列印行代收金</a></td>
+		</tr>
+	</table>
 
 	<form action="login_receive.php" method="post">
 		帳號:
