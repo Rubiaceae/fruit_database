@@ -81,6 +81,98 @@ html開始
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width">
+	<title>編輯行口運金</title>
+	<script src="http://127.0.0.1/jquery.min.js"></script>
+
+        <script>
+		$(document).ready(function(){
+		<?php
+			function getconsignee($station){
+				include("mysql_connect.inc.php");
+				$sql="select * from consignee_list where station ='".$station."'";
+				if ($result=mysqli_query($con, $sql)) {
+					#echo "Get List successful!";
+				} else {
+					echo "Error Getting List " . mysqli_error($con);
+				}
+				mysqli_close($con);
+				return $result;
+			};
+
+			$sql="SELECT station FROM fruit_database.consignee_list group by station;";#選出所有地點
+			include("mysql_connect.inc.php");
+			if ($station_sql=mysqli_query($con, $sql)) {
+				} else {
+					echo "Error Getting List " . mysqli_error($con);
+			}
+			$station_array=array();
+			$stations="'";
+			while($row = $station_sql->fetch_array())
+				{
+					#echo $row['station'];
+					array_push($station_array,$row['station']);
+					$stations=$stations."','".$row['station'];
+				} 
+			#print_r( $station_array);
+
+			$stations=$stations."'";
+			$stations=substr($stations,3,strlen($stations)-1);
+			#echo $stations;
+			#echo $station_array[0];
+			$consignees_id=array();
+			for ($i=0;$i<count($station_array);$i++){
+				$consignee_sql=getconsignee($station_array[$i]);
+				#$consignee_array=array();
+				#print_r($consignee_sql);
+				#$consignees=array();
+				$consignees[$i]="'";
+				$consignees_id[$i]="'";
+				while($row = $consignee_sql->fetch_array())
+					{
+						#echo $row['station'];
+						#array_push($consignee_array,$row['consignee']);
+						$consignees[$i]=$consignees[$i]."','".$row['consignee'];
+						$consignees_id[$i]=$consignees_id[$i]."','".$row['consignee_id'];
+					} 
+				$consignees[$i]=$consignees[$i]."'";
+				$consignees[$i]=substr($consignees[$i],3,strlen($consignees[$i])-1);
+				$consignees_id[$i]=$consignees_id[$i]."'";
+				$consignees_id[$i]=substr($consignees_id[$i],3,strlen($consignees_id[$i])-1);
+				#echo $consignees[$i];
+				#echo $consignees_id[$i];
+			}
+
+			echo "stations=[".$stations."];";
+
+		?>
+                var inner="";
+                for(var i=0;i<stations.length;i++){
+                    inner=inner+'<option value=i>'+stations[i]+'</option>';
+                }
+                $("#stations-list").html(inner)
+                
+                var consignees=new Array();
+                var consignees_id=new Array();
+		<?php
+
+			for ($j=0;$j <count($station_array);$j++){
+				echo  "consignees[".$j."]=[".$consignees[$j]."];\n";
+				echo  "consignees_id[".$j."]=[".$consignees_id[$j]."];\n";
+			}
+		?>
+
+                $("#stations-list").change(function(){
+                    index=this.selectedIndex;
+                    var Sinner="";
+                    for(var i=0;i<consignees[index].length;i++){
+                        Sinner=Sinner+'<option value='+consignees_id[index][i]+'>'+consignees[index][i]+'</option>';
+                    }
+                    $("#cosignee-list").html(Sinner);
+                });
+                $("#stations-list").change();
+            });
+        </script>
+
 </head>
 <body >
 
@@ -164,18 +256,19 @@ if(!isset($_SESSION['name']) || empty($_SESSION['name'])){
 	};
 
 
-
+	echo "<h1>選擇要編輯運金的行口</h1>";
 	echo '<form action="edit_money_form.php" method="get">';
 		$today = date('Y-m-d' );
 		echo "日期 date";
 		echo "<input type=\"date\" name=\"date\" value=\"".$today."\"></br>";
-		echo "行口名稱<select name=\"consignee_id\">";
-		$consignee_list=getlist("consignee_list");
-		while($row = $consignee_list->fetch_array())
-		{
-			echo "\t\t<option value=\"".$row['consignee_id']."\">".$row['consignee']."</option>\n";
-		}
-		echo "<select></br>";
+		echo "行口位置<select id=\"stations-list\"></select>";
+		echo "行口名稱<select name=\"consignee_id\" id=\"cosignee-list\"></select></br>";
+#		$consignee_list=getlist("consignee_list");
+#		while($row = $consignee_list->fetch_array())
+#		{
+#			echo "\t\t<option value=\"".$row['consignee_id']."\">".$row['consignee']."</option>\n";
+#		}
+#		echo "<select></br>";
 
 		echo '<input type="submit" value="送出表單">';
 		echo '<input type="reset" value="清除表單">';
