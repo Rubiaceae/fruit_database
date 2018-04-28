@@ -30,9 +30,9 @@ if(isset($_SESSION['name']) && !empty($_SESSION['name'])) {
 		$_SESSION['name']="admin";
 		echo "Login success!, ".$_POST['name'];
 		if(isset( $_SESSION['refurl']) && !empty($_SESSION['refurl'])){
-			echo "<script>setTimeout(function(){location.href='".$_SESSION['refurl']."';},2000);</script><!--五秒後自動回上一頁-->";	
+			echo "<script>setTimeout(function(){location.href='".$_SESSION['refurl']."';},1000);</script><!--五秒後自動回上一頁-->";	
 		}else{
-			echo "<script>setTimeout(function(){window.location = document.referrer;},2000);</script><!--五秒後自動回上一頁-->";
+			echo "<script>setTimeout(function(){window.location = document.referrer;},1000);</script><!--五秒後自動回上一頁-->";
 		}
 		
 	}else{
