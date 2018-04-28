@@ -19,7 +19,7 @@ if(!isset($_GET['driver_id']) && !isset($_GET['date'])) {
 	};
 
 
-
+	echo "<h1>選擇要列印表單的日期與司機</h1>";
 	echo '<form action="print_driver_table.php" method="get">';
 		$today = date('Y-m-d' );
 		echo "日期 date";
@@ -44,15 +44,15 @@ if(!isset($_GET['driver_id']) && !isset($_GET['date'])) {
 
 	include("mysql_connect.inc.php");
 	$sql = 'SELECT * FROM fruit_database.order_list, fruit_database.trucking_list,fruit_database.shipper_list,
-fruit_database.consignee_list,fruit_database.driver_list
-where trucking_list.trucking_id=order_list.trucking_id 
-and shipper_list.shipper_id=order_list.shipper_id 
-and consignee_list.consignee_id=order_list.consignee_id 
-and driver_list.driver_id=order_list.driver_id
-and order_list.driver_id=\''.$driver_id.'\'
-and order_list.date=\''.$date.'\'
-order by order_list.driver_trip, order_list.consignee_id
-;';
+	fruit_database.consignee_list,fruit_database.driver_list
+	where trucking_list.trucking_id=order_list.trucking_id 
+	and shipper_list.shipper_id=order_list.shipper_id 
+	and consignee_list.consignee_id=order_list.consignee_id 
+	and driver_list.driver_id=order_list.driver_id
+	and order_list.driver_id=\''.$driver_id.'\'
+	and order_list.date=\''.$date.'\'
+	order by order_list.driver_trip, order_list.consignee_id
+	;';
 
 
 
