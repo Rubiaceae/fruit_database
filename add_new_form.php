@@ -5,13 +5,14 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width">
+	<title>新增顧客</title>
 </head>
 <body >
 <input type ="button" onclick="javascript:location.href='index.html'" value="回首頁"></input>
-<h1>新增南部</h1>
+<h1>新增南部貨運行</h1>
 <form action="add_new_receive.php" method="post">
 	<table border=1>
-		<tr><td>南部貨運名稱</td>
+		<tr><td>貨運行名稱</td>
 		
 		<td><input type="text" name="trucking_new" maxlength="10" size="10" required></td>
 		</tr>
@@ -70,16 +71,17 @@
 <?php
 #列出已有的所有名單
 #定義函數，取得名單資料表
-function getlist($list){
-	include("mysql_connect.inc.php");
-	$sql='select * from '.$list;
-	if ($result=mysqli_query($con, $sql)) {
-		#echo "Get List successful!";
-	} else {
-		echo "Error Getting List " . mysqli_error($con);
-	}
-	mysqli_close($con);
-	return $result;
+function getlist($list)
+{
+    include("mysql_connect.inc.php");
+    $sql='select * from '.$list;
+    if ($result=mysqli_query($con, $sql)) {
+        #echo "Get List successful!";
+    } else {
+        echo "Error Getting List " . mysqli_error($con);
+    }
+    mysqli_close($con);
+    return $result;
 };
 
 $trucking_list=getlist("trucking_list");
@@ -88,34 +90,30 @@ $consignee_list=getlist("consignee_list");
 $driver_list=getlist("driver_list");
 echo "南部貨運編號 </br>\n";
 echo "<table border=\"1\">\n";
-while($row = $trucking_list->fetch_array())
-	{
-	echo "<tr> <td>" . $row['trucking_id'] . "</td> <td>" . $row['trucking']."</td> </tr>\n";
-	};
+while ($row = $trucking_list->fetch_array()) {
+    echo "<tr> <td>" . $row['trucking_id'] . "</td> <td>" . $row['trucking']."</td> </tr>\n";
+};
 echo "</table></br>\n";
 
 echo "貨主編號 </br>\n";
 echo "<table border=\"1\">\n";
-while($row = $shipper_list->fetch_array())
-	{
-	echo "<tr> <td>" . $row['shipper_id'] . "</td> <td>" . $row['shipper']."</td> </tr>\n";
-	};
+while ($row = $shipper_list->fetch_array()) {
+    echo "<tr> <td>" . $row['shipper_id'] . "</td> <td>" . $row['shipper']."</td> </tr>\n";
+};
 echo "</table></br>\n";
 
 echo "行口編號 </br>\n";
 echo "<table border=\"1\">\n";
-while($row = $consignee_list->fetch_array())
-	{
-	echo "<tr> <td>" . $row['consignee_id'] . "</td> <td>" . $row['consignee']."</td><td>".$row['station']."</td> </tr>\n";
-	};
+while ($row = $consignee_list->fetch_array()) {
+    echo "<tr> <td>" . $row['consignee_id'] . "</td> <td>" . $row['consignee']."</td><td>".$row['station']."</td> </tr>\n";
+};
 echo "</table></br>\n";
 
 echo "司機編號 </br>\n";
 echo "<table border=\"1\">\n";
-while($row = $driver_list->fetch_array())
-	{
-	echo "<tr> <td>" . $row['driver_id'] . "</td> <td>" . $row['driver']."</td> </tr>\n";
-	};
+while ($row = $driver_list->fetch_array()) {
+    echo "<tr> <td>" . $row['driver_id'] . "</td> <td>" . $row['driver']."</td> </tr>\n";
+};
 echo "</table></br>\n";
 
 ?>
