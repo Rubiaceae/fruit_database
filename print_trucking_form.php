@@ -27,8 +27,11 @@ if(!isset($_GET['trucking_id']) && !isset($_GET['date'])) {
 	echo "<h1>選擇要列印表單的日期與貨運行</h1>";
 	echo '<form action="print_trucking_form.php" method="get">';
 		$today = date('Y-m-d' );
-		echo "日期 date";
+		echo "開始日期 date";
 		echo "<input type=\"date\" name=\"date\" value=\"".$today."\"></br>";
+		echo "結束日期 date";
+		echo "<input type=\"date\" name=\"enddate\" value=\"".$today."\"></br>";
+				
 		echo "貨運行名稱<select name=\"trucking_id\">";
 		$trucking_list=getlist("trucking_list");
 		while($row = $trucking_list->fetch_array())
@@ -47,7 +50,12 @@ if(!isset($_GET['trucking_id']) && !isset($_GET['date'])) {
 
 	$trucking_id=$_GET['trucking_id'];
 	$date=$_GET['date'];
+	$enddate=$_GET['enddate'];
 	$carlicense=$_GET['carlicense'];
+	if(strtotime($enddate) - strtotime($date) < 0){
+	echo "錯誤！結束日期早於開始日期！";	
+	exit;	
+	}
 	include("mysql_connect.inc.php");
 	if(empty($carlicense)){#判斷有沒有填車牌，沒有車號就全列，照order_id排
 	$sql = 'SELECT * FROM fruit_database.order_list
@@ -56,7 +64,7 @@ if(!isset($_GET['trucking_id']) && !isset($_GET['date'])) {
 		left join fruit_database.consignee_list  on consignee_list.consignee_id=order_list.consignee_id
 		left join fruit_database.driver_list  on driver_list.driver_id=order_list.driver_id
 		where order_list.trucking_id=\''.$trucking_id.'\'
-		and order_list.date=\''.$date.'\'
+		and order_list.date between \''.$date.'\' and \''.$enddate.'\' 
 		order by order_list.order_id
 		;';
 	}else{#有車號就列，照order_id排
@@ -66,9 +74,9 @@ if(!isset($_GET['trucking_id']) && !isset($_GET['date'])) {
 		left join fruit_database.consignee_list  on consignee_list.consignee_id=order_list.consignee_id
 		left join fruit_database.driver_list  on driver_list.driver_id=order_list.driver_id
 		where order_list.trucking_id=\''.$trucking_id.'\'
-		and order_list.date=\''.$date.'\'
+		and order_list.date between \''.$date.'\' and \''.$enddate.'\' 
 		and order_list.carlicense=\''.$carlicense.'\'
-		order by order_list.order_id
+		order by or order_list.order_id
 		;';
 	}
 
@@ -99,14 +107,15 @@ if(!isset($_GET['trucking_id']) && !isset($_GET['date'])) {
 	echo "<div class=\"print_table\">";
 	echo "<h1>代收金明細表</h1>";
 	echo "<h2><p id=data></p></h2>\n";
+	echo "<h2><p id=data2></p></h2>\n";
 	echo "<table id=table border=\"1\">\n";
-	echo "<tr><td>項目</td><td>訂單編號</td><td width='60'>車號</td><td>貨主</td><td width='60'>品名</td><td>數量</td><td>代收金</td><td>行口</td><td>市場</td></tr>";
+	echo "<tr><td>項目</td><td>訂單編號</td><td>訂單日期</td><td width='60'>車號</td><td>貨主</td><td width='60'>品名</td><td>數量</td><td>代收金</td><td>行口</td><td>市場</td></tr>";
 	$i=0;
 	$c=0;
 	while($row = $result->fetch_array())
 	{
 		$i=$i+1;
-		echo "<tr> <td>" . $i . "</td><td>" . $row['order_id'] . "</td><td>" . $row['carlicense'] . "</td><td>".$row['shipper'] . "</td><td>".$row['product'] . "</td><td>".$row['quantity'] . "</td><td>".$row['trucking_money'] . "</td><td>".$row['consignee'] . "</td><td>".$row['station'] . "</td></tr>\n";
+		echo "<tr> <td>" . $i . "</td><td>" . $row['order_id'] . "</td><td>" . $row['date'] . "</td><td>" . $row['carlicense'] . "</td><td>".$row['shipper'] . "</td><td>".$row['product'] . "</td><td>".$row['quantity'] . "</td><td>".$row['trucking_money'] . "</td><td>".$row['consignee'] . "</td><td>".$row['station'] . "</td></tr>\n";
 	$trucking=$row['trucking'];
 	if($row['carlicense']!==$carlicense){$c=$c+1;}
 	$carlicense=$row['carlicense'];
@@ -114,9 +123,11 @@ if(!isset($_GET['trucking_id']) && !isset($_GET['date'])) {
 	$sum_trucking_money=$sum_trucking_money+$row['trucking_money'];
 	};
 	echo "</table></br>\n";
-	$data="日期: ".$date."  貨運行: ".$trucking."  車號: ".$carlicense;
+	$data="開始日期: ".$date." 結束日期: ".$enddate;
+	$data2="貨運行: ".$trucking." \t車號: ".$carlicense;
 	echo "<script>";
 	echo "document.getElementById(\"data\").innerHTML = '".$data."';";
+	echo "document.getElementById(\"data2\").innerHTML = '".$data2."';";
 	echo "</script>"; 
 	if($c >= 2){echo "<h2>注意！車號並不統一！</h2></br>";}
 	echo "<h2> 代收金總額=".$sum_trucking_money."</h2></br>";
