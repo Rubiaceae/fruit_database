@@ -69,15 +69,22 @@ if(!isset($_GET['driver_id']) && !isset($_GET['date'])) {
 
 #html開始
 
-	echo "<h1>已分配的貨物名單</h1></br>\n";
+	echo "<h1>司機送貨明細</h1>\n";
+	echo "<h2><p id=data></p></h2>\n";
 	echo "<table border=\"1\">\n";
-	echo "<tr><td>訂單成立時間</td><td>訂單編號</td><td>訂單日期</td><td>南部貨運商</td><td>車號</td><td>貨主</td><td>品名</td><td>數量</td><td>代收金</td><td>行口</td><td>市場</td><td>司機</td><td>趟次</td><td>派送</td></tr>";
+	echo "<tr><td>項目</td><td>訂單編號</td><td>南部貨運行</td><td>車號</td><td>貨主</td><td>品名</td><td>數量</td><td>代收金</td><td>行口</td><td>市場</td><td>趟次</td></tr>";
+	$i=0;
 	while($row = $result->fetch_array())
 	{
-		echo "<tr> <td>" . $row['timestamp'] . "</td><td>" . $row['order_id'] . "</td><td>" . $row['date'] . "</td> <td>" . $row['trucking']."</td><td>" . $row['carlicense'] . "</td><td>".$row['shipper'] . "</td><td>".$row['product'] . "</td><td>".$row['quantity'] . "</td><td>".$row['trucking_money'] . "</td><td>".$row['consignee'] . "</td><td>".$row['station'] . "</td><td>".$row['driver'] . "</td><td>".$row['driver_trip'] . "</td><td> <input  type=\"checkbox\" name=".$row['order_id'] . "></td></tr>\n";
+		$i=$i+1;
+		echo "<tr> <td>" . $i . "</td><td>" . $row['order_id'] . "</td> <td>" . $row['trucking']."</td><td>" . $row['carlicense'] . "</td><td>".$row['shipper'] . "</td><td>".$row['product'] . "</td><td>".$row['quantity'] . "</td><td>".$row['trucking_money'] . "</td><td>".$row['consignee'] . "</td><td>".$row['station'] . "</td><td>".$row['driver_trip'] . "</td></tr>\n";
+		$driver=$row['driver'];
 	};
 	echo "</table></br>\n";
-
+	$data="日期: ".$date." 司機: ".$driver;
+	echo "<script>";
+	echo "document.getElementById(\"data\").innerHTML = '".$data."';";
+	echo "</script>";
 }
 ?>
 

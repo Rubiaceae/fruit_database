@@ -5,6 +5,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width">
+	<link rel="stylesheet" type="text/css" href="theme.css">
 </head>
 <body >
 <?php
@@ -77,17 +78,17 @@ if(!isset($_GET['trucking_id']) && !isset($_GET['date'])) {
 	} else {
 		echo "Error Getting List " . mysqli_error($con);
 	}
-	#mysqli_close($con);
+	mysqli_close($con);
 
-	$sql2="select trucking from fruit_database.trucking_list where trucking_id =".$trucking_id." limit 1;";
-	
-	if ($result2=mysqli_query($con, $sql2)) {
-	} else {
-		echo "Error Getting List " . mysqli_error($con);
-	}
-	mysqli_close($con);	
-	while($row = $result2->fetch_array()){
-	$trucking=$row['trucking'];}
+#	$sql2="select trucking from fruit_database.trucking_list where trucking_id =".$trucking_id." limit 1;";
+#	
+#	if ($result2=mysqli_query($con, $sql2)) {
+#	} else {
+#		echo "Error Getting List " . mysqli_error($con);
+#	}
+#	mysqli_close($con);	
+#	while($row = $result2->fetch_array()){
+#	$trucking=$row['trucking'];}
 
 	$sum_trucking_money=0;
 
@@ -95,20 +96,32 @@ if(!isset($_GET['trucking_id']) && !isset($_GET['date'])) {
 
 
 #html開始
-
-	echo "<h1>日期:".$date." 貨運行: ".$trucking."</h1></br>\n";
-	echo "<table border=\"1\">\n";
-	echo "<tr><td>訂單成立時間</td><td>訂單編號</td><td>訂單日期</td><td>南部貨運商</td><td>車號</td><td>貨主</td><td>品名</td><td>數量</td><td>代收金</td><td>行口</td><td>市場</td><td>司機</td><td>趟次</td></tr>";
+	echo "<div class=\"print_table\">";
+	echo "<h1>代收金明細表</h1>";
+	echo "<h2><p id=data></p></h2>\n";
+	echo "<table id=table border=\"1\">\n";
+	echo "<tr><td>項目</td><td>訂單編號</td><td width='60'>車號</td><td>貨主</td><td width='60'>品名</td><td>數量</td><td>代收金</td><td>行口</td><td>市場</td></tr>";
+	$i=0;
+	$c=0;
 	while($row = $result->fetch_array())
 	{
-		echo "<tr> <td>" . $row['timestamp'] . "</td><td>" . $row['order_id'] . "</td><td>" . $row['date'] . "</td> <td>" . $row['trucking']."</td><td>" . $row['carlicense'] . "</td><td>".$row['shipper'] . "</td><td>".$row['product'] . "</td><td>".$row['quantity'] . "</td><td>".$row['trucking_money'] . "</td><td>".$row['consignee'] . "</td><td>".$row['station'] . "</td><td>".$row['driver'] . "</td><td>".$row['driver_trip'] . "</td></tr>\n";
+		$i=$i+1;
+		echo "<tr> <td>" . $i . "</td><td>" . $row['order_id'] . "</td><td>" . $row['carlicense'] . "</td><td>".$row['shipper'] . "</td><td>".$row['product'] . "</td><td>".$row['quantity'] . "</td><td>".$row['trucking_money'] . "</td><td>".$row['consignee'] . "</td><td>".$row['station'] . "</td></tr>\n";
+	$trucking=$row['trucking'];
+	if($row['carlicense']!==$carlicense){$c=$c+1;}
+	$carlicense=$row['carlicense'];
+		
 	$sum_trucking_money=$sum_trucking_money+$row['trucking_money'];
 	};
 	echo "</table></br>\n";
-
+	$data="日期: ".$date."  貨運行: ".$trucking."  車號: ".$carlicense;
+	echo "<script>";
+	echo "document.getElementById(\"data\").innerHTML = '".$data."';";
+	echo "</script>"; 
+	if($c >= 2){echo "<h2>注意！車號並不統一！</h2></br>";}
 	echo "<h2> 代收金總額=".$sum_trucking_money."</h2></br>";
-	
 
+	echo "</div>";
 }
 ?>
 
