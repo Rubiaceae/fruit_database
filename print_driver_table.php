@@ -2,6 +2,8 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width">
+	<link rel="stylesheet" type="text/css" href="theme.css">
+
 </head>
 <body >
 <?php
@@ -68,7 +70,7 @@ if(!isset($_GET['driver_id']) && !isset($_GET['date'])) {
 
 
 #html開始
-
+	echo "<div class=print_table>";
 	echo "<h1>司機送貨明細</h1>\n";
 	echo "<h2><p id=data></p></h2>\n";
 	echo "<table border=\"1\">\n";
@@ -85,6 +87,7 @@ if(!isset($_GET['driver_id']) && !isset($_GET['date'])) {
 	echo "<script>";
 	echo "document.getElementById(\"data\").innerHTML = '".$data."';";
 	echo "</script>";
+	echo "</div>";
 }
 ?>
 
