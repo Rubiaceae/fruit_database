@@ -9,7 +9,6 @@ function getorderlist_withconsignee_date($consignee_id,$date){#查詢所有表jo
 	include("mysql_connect.inc.php");
 	$sql = 'SELECT * FROM fruit_database.order_list
 left join fruit_database.trucking_list  on trucking_list.trucking_id=order_list.trucking_id 
-left join fruit_database.shipper_list  on shipper_list.shipper_id=order_list.shipper_id 
 left join fruit_database.consignee_list  on consignee_list.consignee_id=order_list.consignee_id
 left join fruit_database.driver_list  on driver_list.driver_id=order_list.driver_id
 where order_list.consignee_id=\''.$consignee_id.'\'
@@ -33,7 +32,6 @@ function getorderlist_withconsignee_date_money($consignee_id,$date){#查詢所�
 	$sql = '
 SELECT * FROM fruit_database.order_list
 left join fruit_database.trucking_list  on trucking_list.trucking_id=order_list.trucking_id 
-left join fruit_database.shipper_list  on shipper_list.shipper_id=order_list.shipper_id 
 left join fruit_database.consignee_list  on consignee_list.consignee_id=order_list.consignee_id
 left join fruit_database.driver_list  on driver_list.driver_id=order_list.driver_id
 where order_list.consignee_id=\''.$consignee_id.'\'

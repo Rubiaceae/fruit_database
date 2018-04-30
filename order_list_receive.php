@@ -17,7 +17,8 @@ if( $_POST['token'] == "xAD5l9weDCqKkYgZNd1ICxn4"){
 	$date = $_POST['date'];
 	$trucking_id = $_POST['trucking_id'];
 	$carlicense = $_POST['carlicense'];
-	$shipper_id=$_POST['shipper_id'];
+#	$shipper_id=$_POST['shipper_id'];
+	$shipper=$_POST['shipper'];
 	$product=$_POST['product'];
 	$quantity=$_POST['quantity'];
 	$trucking_money=$_POST['trucking_money'];
@@ -25,7 +26,7 @@ if( $_POST['token'] == "xAD5l9weDCqKkYgZNd1ICxn4"){
 	$note=$_POST['note'];
 
 
-	$sql = 'INSERT INTO fruit_database.order_list (`date`,`trucking_id`,`carlicense`,`shipper_id`,`product`,`quantity`,`trucking_money`,`consignee_id`,`note`) values("'.$date.'","'.$trucking_id.'","'.$carlicense.'","'.$shipper_id.'","'.$product.'","'.$quantity.'","'.$trucking_money.'","'.$consignee_id.'","'.$note.'")';
+	$sql = 'INSERT INTO fruit_database.order_list (`date`,`trucking_id`,`carlicense`,`shipper`,`product`,`quantity`,`trucking_money`,`consignee_id`,`note`) values("'.$date.'","'.$trucking_id.'","'.$carlicense.'","'.$shipper.'","'.$product.'","'.$quantity.'","'.$trucking_money.'","'.$consignee_id.'","'.$note.'")';
 
 
 

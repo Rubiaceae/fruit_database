@@ -157,16 +157,19 @@ echo "<td>	  <input type=\"date\" name=\"date\" value=\"".$today."\">";
 </tr>
 
 <tr>
-	<td >貨主編號 shipper_id</td> 
-	<td >
-		<select name="shipper_id">
-		<?php
-		$shipper_list=getlist("shipper_list");
-		while($row = $shipper_list->fetch_array())
-		  {
-		  echo "\t\t<option value=\"".$row['shipper_id']."\">".$row['shipper']."</option>\n";
-		  }
-		?>
+	<td >貨主 shipper</td> 
+	<td ><input type="text" name="shipper" maxlength="7" size="7"  required><br>
+		
+<!--
+#		<select name="shipper_id">
+#		<?php
+#		$shipper_list=getlist("shipper_list");
+#		while($row = $shipper_list->fetch_array())
+#		  {
+#		  echo "\t\t<option value=\"".$row['shipper_id']."\">".$row['shipper']."</option>\n";
+#		  }
+#		?>
+-->
 		</select>	
 	</td>
 </tr>

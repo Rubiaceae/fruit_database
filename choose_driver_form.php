@@ -23,12 +23,11 @@ function getlist($list){
 function getorderlist(){#查詢所有表join，未有司機編號，照行口排序
 	include("mysql_connect.inc.php");
 
-	$sql = 'SELECT * FROM fruit_database.order_list, fruit_database.trucking_list,fruit_database.shipper_list,
-	fruit_database.consignee_list 
-	where trucking_list.trucking_id=order_list.trucking_id 
-	and shipper_list.shipper_id=order_list.shipper_id 
-	and consignee_list.consignee_id=order_list.consignee_id
-	and order_list.driver_id is NULL
+	$sql = 'SELECT * FROM fruit_database.order_list
+	left join fruit_database.trucking_list  on trucking_list.trucking_id=order_list.trucking_id 
+	left join fruit_database.consignee_list  on consignee_list.consignee_id=order_list.consignee_id
+	left join fruit_database.driver_list  on driver_list.driver_id=order_list.driver_id
+	where order_list.driver_id is NULL
 	order by station,order_list.consignee_id
 	;';
 	if ($result=mysqli_query($con, $sql)) {
@@ -42,13 +41,12 @@ function getorderlist(){#查詢所有表join，未有司機編號，照行口排
 
 function getorderlist_withdriver(){#查詢所有表join，已有司機編號，且小於17小時內的紀錄，照driver_id,driver_trip,consignee_id排列
 	include("mysql_connect.inc.php");
-	$sql = 'SELECT * FROM fruit_database.order_list, fruit_database.trucking_list,fruit_database.shipper_list,
-	fruit_database.consignee_list,fruit_database.driver_list
-	where trucking_list.trucking_id=order_list.trucking_id 
-	and shipper_list.shipper_id=order_list.shipper_id 
-	and consignee_list.consignee_id=order_list.consignee_id 
-	and driver_list.driver_id=order_list.driver_id
-	and order_list.timestamp > (NOW()- INTERVAL 17 HOUR)
+	$sql = 'SELECT * FROM fruit_database.order_list
+	left join fruit_database.trucking_list  on trucking_list.trucking_id=order_list.trucking_id 
+	left join fruit_database.consignee_list  on consignee_list.consignee_id=order_list.consignee_id
+	left join fruit_database.driver_list  on driver_list.driver_id=order_list.driver_id
+	where order_list.driver_id is not null
+	and  order_list.timestamp > (NOW()- INTERVAL 17 HOUR)
 	order by order_list.driver_id,order_list.driver_trip, order_list.consignee_id
 	;';
 	if ($result=mysqli_query($con, $sql)) {

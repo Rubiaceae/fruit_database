@@ -60,7 +60,6 @@ if(!isset($_GET['trucking_id']) && !isset($_GET['date'])) {
 	if(empty($carlicense)){#判斷有沒有填車牌，沒有車號就全列，照order_id排
 	$sql = 'SELECT * FROM fruit_database.order_list
 		left join fruit_database.trucking_list  on trucking_list.trucking_id=order_list.trucking_id 
-		left join fruit_database.shipper_list  on shipper_list.shipper_id=order_list.shipper_id 
 		left join fruit_database.consignee_list  on consignee_list.consignee_id=order_list.consignee_id
 		left join fruit_database.driver_list  on driver_list.driver_id=order_list.driver_id
 		where order_list.trucking_id=\''.$trucking_id.'\'
@@ -70,7 +69,6 @@ if(!isset($_GET['trucking_id']) && !isset($_GET['date'])) {
 	}else{#有車號就列，照order_id排
 	$sql = 'SELECT * FROM fruit_database.order_list
 		left join fruit_database.trucking_list  on trucking_list.trucking_id=order_list.trucking_id 
-		left join fruit_database.shipper_list  on shipper_list.shipper_id=order_list.shipper_id 
 		left join fruit_database.consignee_list  on consignee_list.consignee_id=order_list.consignee_id
 		left join fruit_database.driver_list  on driver_list.driver_id=order_list.driver_id
 		where order_list.trucking_id=\''.$trucking_id.'\'

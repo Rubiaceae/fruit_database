@@ -45,13 +45,11 @@ if(!isset($_GET['driver_id']) && !isset($_GET['date'])) {
 	$date=$_GET['date'];
 
 	include("mysql_connect.inc.php");
-	$sql = 'SELECT * FROM fruit_database.order_list, fruit_database.trucking_list,fruit_database.shipper_list,
-	fruit_database.consignee_list,fruit_database.driver_list
-	where trucking_list.trucking_id=order_list.trucking_id 
-	and shipper_list.shipper_id=order_list.shipper_id 
-	and consignee_list.consignee_id=order_list.consignee_id 
-	and driver_list.driver_id=order_list.driver_id
-	and order_list.driver_id=\''.$driver_id.'\'
+	$sql = 'SELECT * FROM fruit_database.order_list
+	left join fruit_database.trucking_list  on trucking_list.trucking_id=order_list.trucking_id 
+	left join fruit_database.consignee_list  on consignee_list.consignee_id=order_list.consignee_id
+	left join fruit_database.driver_list  on driver_list.driver_id=order_list.driver_id
+	where order_list.driver_id=\''.$driver_id.'\'
 	and order_list.date=\''.$date.'\'
 	order by order_list.driver_trip, order_list.consignee_id
 	;';
