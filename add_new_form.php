@@ -22,7 +22,7 @@
 	<input type="reset" value="清除表單">
 </form>
 
-
+<!--
 <h1>新增貨主</h1>
 <form action="add_new_receive.php" method="post">
 	<table border=1>
@@ -35,7 +35,7 @@
 	<input type="submit" value="送出表單">
 	<input type="reset" value="清除表單">
 </form>
-
+-->
 <h1>新增行口</h1>
 <form action="add_new_receive.php" method="post">
 	<table border=1>
@@ -95,12 +95,12 @@ while ($row = $trucking_list->fetch_array()) {
 };
 echo "</table></br>\n";
 
-echo "貨主編號 </br>\n";
-echo "<table border=\"1\">\n";
-while ($row = $shipper_list->fetch_array()) {
-    echo "<tr> <td>" . $row['shipper_id'] . "</td> <td>" . $row['shipper']."</td> </tr>\n";
-};
-echo "</table></br>\n";
+#echo "貨主編號 </br>\n";
+#echo "<table border=\"1\">\n";
+#while ($row = $shipper_list->fetch_array()) {
+#    echo "<tr> <td>" . $row['shipper_id'] . "</td> <td>" . $row['shipper']."</td> </tr>\n";
+#};
+#echo "</table></br>\n";
 
 echo "行口編號 </br>\n";
 echo "<table border=\"1\">\n";

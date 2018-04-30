@@ -18,8 +18,6 @@
 if( $_POST['token'] == "xAD5l9weDCqKkYgZNd1ICxn4"){
 	if(!empty($_POST['trucking_new'])){
 		$sql = 'INSERT INTO fruit_database.trucking_list (`trucking`) values("'.$_POST['trucking_new'].'")';
-	}elseif(!empty($_POST['shipper_new'])){
-		$sql = 'INSERT INTO fruit_database.shipper_list (`shipper`) values("'.$_POST['shipper_new'].'")';
 	}elseif(!empty($_POST['consignee_new'])){
 		$sql = 'INSERT INTO fruit_database.consignee_list (`consignee`,`station`) values("'.$_POST['consignee_new']."\",\"".$_POST['station_new'].'")';
 	}elseif(!empty($_POST['driver_new'])){
