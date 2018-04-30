@@ -5,17 +5,17 @@
 <?php
 session_start();
 
-function getorderlist_withconsignee_date($consignee_id,$date){#查詢所有表join，有特定行口編號與日期，尚未設定金錢
+function getorderlist_withconsignee_date($consignee_id,$date,$enddate){#查詢所有表join，有特定行口編號與日期，尚未設定金錢
 	include("mysql_connect.inc.php");
 	$sql = 'SELECT * FROM fruit_database.order_list
-left join fruit_database.trucking_list  on trucking_list.trucking_id=order_list.trucking_id 
-left join fruit_database.consignee_list  on consignee_list.consignee_id=order_list.consignee_id
-left join fruit_database.driver_list  on driver_list.driver_id=order_list.driver_id
-where order_list.consignee_id=\''.$consignee_id.'\'
-and order_list.date=\''.$date.'\'
-and consignee_money is null
-order by order_list.driver_trip, order_list.consignee_id
-;';
+		left join fruit_database.trucking_list  on trucking_list.trucking_id=order_list.trucking_id 
+		left join fruit_database.consignee_list  on consignee_list.consignee_id=order_list.consignee_id
+		left join fruit_database.driver_list  on driver_list.driver_id=order_list.driver_id
+		where order_list.consignee_id=\''.$consignee_id.'\'
+		and order_list.date between \''.$date.'\' and \''.$enddate.'\' 
+		and consignee_money is null
+		order by order_list.driver_trip, order_list.consignee_id
+		;';
 	if ($result=mysqli_query($con, $sql)) {
 		#echo "Get List successful!";
 	} else {
@@ -27,18 +27,17 @@ order by order_list.driver_trip, order_list.consignee_id
 }
 
 
-function getorderlist_withconsignee_date_money($consignee_id,$date){#查詢所有表join，有特定行口編號與日期，已設定金錢
+function getorderlist_withconsignee_date_money($consignee_id,$date,$enddate){#查詢所有表join，有特定行口編號與日期，已設定金錢
 	include("mysql_connect.inc.php");
-	$sql = '
-SELECT * FROM fruit_database.order_list
-left join fruit_database.trucking_list  on trucking_list.trucking_id=order_list.trucking_id 
-left join fruit_database.consignee_list  on consignee_list.consignee_id=order_list.consignee_id
-left join fruit_database.driver_list  on driver_list.driver_id=order_list.driver_id
-where order_list.consignee_id=\''.$consignee_id.'\'
-and order_list.date=\''.$date.'\'
-and consignee_money is not null
-order by order_list.driver_trip, order_list.consignee_id
-;';
+	$sql = 'SELECT * FROM fruit_database.order_list
+		left join fruit_database.trucking_list  on trucking_list.trucking_id=order_list.trucking_id 
+		left join fruit_database.consignee_list  on consignee_list.consignee_id=order_list.consignee_id
+		left join fruit_database.driver_list  on driver_list.driver_id=order_list.driver_id
+		where order_list.consignee_id=\''.$consignee_id.'\'
+		and order_list.date between \''.$date.'\' and \''.$enddate.'\' 
+		and consignee_money is not null
+		order by order_list.driver_trip, order_list.consignee_id
+		;';
 	if ($result=mysqli_query($con, $sql)) {
 		#echo "Get List successful!";
 	} else {
@@ -49,14 +48,14 @@ order by order_list.driver_trip, order_list.consignee_id
 
 }
 
-function getsum_money($consignee_id,$date){#查尋特定行口編號與日期，已設定金錢的加總
+function getsum_money($consignee_id,$date,$enddate){#查尋特定行口編號與日期，已設定金錢的加總
 	include("mysql_connect.inc.php");
 	$sql = 'SELECT sum(trucking_money) as sum_trucking_money,sum(consignee_money) as sum_consignee_money FROM fruit_database.order_list
-where order_list.consignee_id=\''.$consignee_id.'\'
-and order_list.date=\''.$date.'\'
-and consignee_money is not null
-order by order_list.driver_trip, order_list.consignee_id
-;';
+		where order_list.consignee_id=\''.$consignee_id.'\'
+		and order_list.date between \''.$date.'\' and \''.$enddate.'\' 
+		and consignee_money is not null
+		order by order_list.driver_trip, order_list.consignee_id
+		;';
 	if ($result=mysqli_query($con, $sql)) {
 		#echo "Get List successful!";
 	} else {
@@ -177,12 +176,17 @@ html開始
 <?php
 $consignee_id=$_GET['consignee_id'];
 $date=$_GET['date'];
+$enddate=$_GET['enddate'];
+if(strtotime($enddate) - strtotime($date) < 0){
+	echo "錯誤！結束日期早於開始日期！";	
+	exit;	
+}
 
 if(!isset($_SESSION['name']) || empty($_SESSION['name'])){
 	echo "尚未登入!";
 	echo "<script>setTimeout(function(){location.href='login_form.php';},".$s.");</script><!--五秒後自動回首頁-->";
 }elseif(isset($_GET['consignee_id']) && isset($_GET['date'])) {
-	$result=getorderlist_withconsignee_date($consignee_id,$date);
+	$result=getorderlist_withconsignee_date($consignee_id,$date,$enddate);
 	echo '<form action="edit_money_receive.php" method="post">';
 	echo "<h1>未決定金額的訂單</h1></br>\n";
 	echo "<table border=\"1\">\n";
@@ -199,7 +203,7 @@ if(!isset($_SESSION['name']) || empty($_SESSION['name'])){
 	echo '<input type ="button" onclick="javascript:location.href=\'index.html\'" value="回首頁"></input></br>';
 	echo '</form>';
 
-	$result=getorderlist_withconsignee_date_money($consignee_id,$date);
+	$result=getorderlist_withconsignee_date_money($consignee_id,$date,$enddate);
 
 	if($result->num_rows === 0)#判斷result是否為空。
 	{
@@ -257,8 +261,10 @@ if(!isset($_SESSION['name']) || empty($_SESSION['name'])){
 	echo "<h1>選擇要編輯運金的行口</h1>";
 	echo '<form action="edit_money_form.php" method="get">';
 		$today = date('Y-m-d' );
-		echo "日期 date";
+		echo "開始日期 date";
 		echo "<input type=\"date\" name=\"date\" value=\"".$today."\"></br>";
+		echo "結束日期 date";
+		echo "<input type=\"date\" name=\"enddate\" value=\"".$today."\"></br>";
 		echo "行口位置<select id=\"stations-list\"></select>";
 		echo "行口名稱<select name=\"consignee_id\" id=\"cosignee-list\"></select></br>";
 #		$consignee_list=getlist("consignee_list");

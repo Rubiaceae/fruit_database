@@ -53,8 +53,8 @@ if(!isset($_GET['trucking_id']) && !isset($_GET['date'])) {
 	$enddate=$_GET['enddate'];
 	$carlicense=$_GET['carlicense'];
 	if(strtotime($enddate) - strtotime($date) < 0){
-	echo "錯誤！結束日期早於開始日期！";	
-	exit;	
+		echo "錯誤！結束日期早於開始日期！";	
+		exit;	
 	}
 	include("mysql_connect.inc.php");
 	if(empty($carlicense)){#判斷有沒有填車牌，沒有車號就全列，照order_id排
