@@ -224,7 +224,7 @@ if(!isset($_SESSION['name']) || empty($_SESSION['name'])){
 		echo '<input type ="button" onclick="javascript:location.href=\'index.html\'" value="回首頁"></input></br>';
 		echo '</form>';
 	
-		$sum_money=getsum_money($consignee_id,$date);
+		$sum_money=getsum_money($consignee_id,$date,$enddate);
 		while($row = $sum_money->fetch_array())
 		{
 			echo "代收金總額=".$row['sum_trucking_money']."</br>";
@@ -274,7 +274,7 @@ if(!isset($_SESSION['name']) || empty($_SESSION['name'])){
 #		}
 #		echo "<select></br>";
 
-		echo '<input type="submit" value="送出表單">';
+		echo '<input type="submit" value="查詢行口">';
 		echo '<input type="reset" value="清除表單">';
 		echo '<input type ="button" onclick="javascript:location.href=\'index.html\'" value="回首頁"></input>';
 	echo '</form>';

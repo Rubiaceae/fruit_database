@@ -92,7 +92,7 @@ if(!isset($_GET['driver_id']) && !isset($_GET['date'])) {
 	#$bc->draw("barcode".$codename."gif");
 	$bardate=substr($date,2,2).substr($date,5,2).substr($date,8,2);
 	$bardriver_id=substr($driver_id,2,2);
-	$barcode="d".$bardate.$bardriver_id;
+	$barcode="o".$bardate.$bardriver_id;
 	echo "<div class=barcode>";
 	echo "	<IMG  SRC=\"barcode.php?barcode=".$barcode."&width=320&height=50\">";
 	echo "</div>";
