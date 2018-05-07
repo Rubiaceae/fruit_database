@@ -77,7 +77,7 @@ html開始
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>編輯行口運金</title>
+	<title>編輯司機薪水</title>
 	      
 
 </head>
@@ -159,7 +159,7 @@ if(!isset($_SESSION['name']) || empty($_SESSION['name'])){
 	};
 
 
-	echo "<h1>選擇要編輯運金的行口</h1>";
+	echo "<h1>選擇要編輯薪水的司機</h1>";
 	echo '<form action="edit_money_driver_form.php" method="get">';
 		$today = date('Y-m-d' );
 		echo "開始日期 date";
@@ -180,7 +180,7 @@ if(!isset($_SESSION['name']) || empty($_SESSION['name'])){
 #		}
 #		echo "<select></br>";
 
-		echo '<input type="submit" value="查詢行口">';
+		echo '<input type="submit" value="查詢司機">';
 		echo '<input type="reset" value="清除表單">';
 		echo '<input type ="button" onclick="javascript:location.href=\'index.html\'" value="回首頁"></input>';
 	echo '</form>';
