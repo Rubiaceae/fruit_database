@@ -32,7 +32,10 @@ return intval($num)-intval($x);
 
 $date=$_GET['date'];
 $enddate=$_GET['enddate'];
-if(strtotime($enddate) - strtotime($date) < 0){
+if(empty($date) or empty($enddate)){
+	$date=date("Y-m-d");
+	$enddate=date("Y-m-d");
+}elseif(strtotime($enddate) - strtotime($date) < 0){
 	echo "錯誤！結束日期早於開始日期！";	
 	exit;	
 }
@@ -184,7 +187,7 @@ left join fruit_database.trucking_list on trucking_list.trucking_id=order_list.t
 left join fruit_database.consignee_list  on consignee_list.consignee_id=order_list.consignee_id
 left join fruit_database.driver_list  on driver_list.driver_id=order_list.driver_id
 where order_list.date between \''.$date.'\' and \''.$enddate.'\' 
-and order_list.order_settle = \'0\'
+and order_list.order_settle is NULL
 order by order_list.order_id;';
 #echo $noorder_settlesql;
 
@@ -204,7 +207,7 @@ left join fruit_database.trucking_list on trucking_list.trucking_id=order_list.t
 left join fruit_database.consignee_list  on consignee_list.consignee_id=order_list.consignee_id
 left join fruit_database.driver_list  on driver_list.driver_id=order_list.driver_id
 where order_list.date between \''.$date.'\' and \''.$enddate.'\' 
-and order_list.trucking_money_settle = \'0\'
+and order_list.trucking_money_settle is NULL
 order by order_list.order_id;';
 #echo $notrucking_money_settlesql;
 
@@ -225,7 +228,7 @@ left join fruit_database.trucking_list on trucking_list.trucking_id=order_list.t
 left join fruit_database.consignee_list  on consignee_list.consignee_id=order_list.consignee_id
 left join fruit_database.driver_list  on driver_list.driver_id=order_list.driver_id
 where order_list.date between \''.$date.'\' and \''.$enddate.'\' 
-and order_list.consignee_money_settle = \'0\'
+and order_list.consignee_money_settle is NULL
 order by order_list.order_id;';
 #echo $noconsignee_money_settlesql;
 
@@ -246,7 +249,7 @@ left join fruit_database.trucking_list on trucking_list.trucking_id=order_list.t
 left join fruit_database.consignee_list  on consignee_list.consignee_id=order_list.consignee_id
 left join fruit_database.driver_list  on driver_list.driver_id=order_list.driver_id
 where order_list.date between \''.$date.'\' and \''.$enddate.'\' 
-and order_list.consignee_money_settle = \'0\'
+and order_list.consignee_money_settle is NULL
 order by order_list.order_id;';
 #echo $nodriver_money_settlesql;
 
