@@ -3,6 +3,10 @@
 	width:18.6cm;
 }
 
+.barcode{
+	text-align:right;
+}
+
 h1,h2{
 	text-align:center;	
 }
