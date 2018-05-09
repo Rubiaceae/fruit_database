@@ -217,7 +217,7 @@ if(!isset($_GET['consignee_id']) && !isset($_GET['date'])) {
 	$bardate=substr($date,2,2).substr($date,5,2).substr($date,8,2);
 	$bardays=str_pad(((strtotime($enddate) - strtotime($date))/86400),2,'0',STR_PAD_LEFT);;
 	$barconsignee_id=substr($consignee_id,0,4);
-	$barcode="t".$bardate.$bardays.$barconsignee_id;
+	$barcode="C".$bardate.$bardays.$barconsignee_id;
 	echo "<div class=barcode>";
 	echo "	<IMG  SRC=\"barcode.php?barcode=".$barcode."&width=320&height=50\">";
 	echo "</div>";
