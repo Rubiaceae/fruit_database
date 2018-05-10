@@ -12,6 +12,33 @@ if(!isset($_SESSION['name']) || empty($_SESSION['name'])){
 function remove_empty($array) {
   return array_values(array_unique(array_filter($array, 'strlen')));
 }
+
+function addDayswithdate($date,$days){
+
+    $date = strtotime("+".$days." days", strtotime($date));
+    return  date("Y-m-d", $date);
+
+}
+
+function barcode_to_sql($barcode){
+	$date='20'.substr($barcode,1,2).'-'.substr($barcode,3,2).'-'.substr($barcode,5,2);
+	$days=substr($barcode,7,2);
+	$enddate=addDayswithdate($date,$days);
+	$id=substr($barcode,9,4);
+	switch(strtoupper(substr($barcode,0,1))){
+	case 'O':
+		$sql=	'SELECT * FROM fruit_database.order_list
+			left join fruit_database.trucking_list  on trucking_list.trucking_id=order_list.trucking_id 
+			left join fruit_database.consignee_list  on consignee_list.consignee_id=order_list.consignee_id
+			left join fruit_database.driver_list  on driver_list.driver_id=order_list.driver_id
+			where order_list.driver_id=\''.$id.'\'
+			and order_list.date between \''.$date.'\' and \''.$enddate.'\'
+			order by order_list.order_id
+			;';
+		break;
+	}
+	return $sql;
+}
 ?>
 
 
@@ -69,11 +96,19 @@ if( $_POST['token'] == "xAD5l9weDCqKkYgZNd1ICxn4"){
 		break;
 	}
 	
-	echo "條碼數量 " .$barlen. " 個";
+	echo "條碼數量 " .$barlen. " 個</br>";
+	#讀取mysql	
+	include("mysql_connect.inc.php");
+	$i=0;
+	foreach($cbarcode as $barcode){
+		$sql[$i]=barcode_to_sql($barcode);
+		echo $sql[$i].'<br>';
+		$i++;
+	}
 
     
 }else{
-echo "ERROR! Wrong Station!";
+	echo "ERROR! Wrong token!";
 }
 
 
