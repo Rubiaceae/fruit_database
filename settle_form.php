@@ -165,6 +165,7 @@ if(!isset($_SESSION['name']) || empty($_SESSION['name'])){
 		$sum_trucking_money=0;
 		$sum_consignee_money=0;
 		$sum_money=0;
+		$update_barcode=[];
 		foreach($cbarcode as $barcode){
 #			echo $barcode;
 			$date='20'.substr($barcode,1,2).'-'.substr($barcode,3,2).'-'.substr($barcode,5,2);
@@ -192,20 +193,35 @@ if(!isset($_SESSION['name']) || empty($_SESSION['name'])){
 				$sum_consignee_money=$sum_consignee_money+floatval($row['sum(consignee_money)']);
 				$sum_money=$sum_money+floatval($row['sum(trucking_money)'])+floatval($row['sum(consignee_money)']);
 				};
+				
+				array_push($update_barcode,$barcode);
 			}
 
 		$i++;
 		}
 		echo "<tr><td></td><td></td><td></td><td></td><td></td><td>".$sum_trucking_money."</td><td>".$sum_consignee_money."</td><td>".$sum_money."</td></tr>";
 		mysqli_close($con);
+		#print_r($update_barcode);
+
+
 		break;
 	case 'D':
 		echo '司機薪資條碼<br>';
 		break;
 	}
 	echo "</table></br>";
-	echo '<input type ="button" onclick="window.location = document.referrer;" value="回到上一頁"></input>';
 
+		
+	#sent to receive to update;
+	echo '<form name=updatebarcodeform action="settle_receive.php" method="post">';	
+	#print_r($update_barcode);
+	foreach($update_barcode as $ubarcode) {
+		echo "<input type=\"hidden\" name=\"ubarcode[]\" value=\"".$ubarcode."\">\n";
+	}
+	echo "<input type=\"hidden\" name=\"token\" value=\"xAD5l9weDCqKkYgZNd1ICxn4\">\n";
+	echo '<input type ="button" onclick="window.location = document.referrer;" value="回到上一頁"></input>';
+	echo "<input type=\"submit\" value=\"確認金額正確\">\n";
+	echo '</form>';
 
 }else{
 
