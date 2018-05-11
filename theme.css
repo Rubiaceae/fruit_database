@@ -16,3 +16,11 @@ table{
 	margin-right:auto;
 	text-align:right;
 }
+
+#settle_table{
+	margin-left:0; 
+	text-align:right;
+}
+.warring{
+	color:red;
+}
