@@ -74,7 +74,7 @@ if(!isset($_GET['trucking_id']) && !isset($_GET['date'])) {
 		where order_list.trucking_id=\''.$trucking_id.'\'
 		and order_list.date between \''.$date.'\' and \''.$enddate.'\' 
 		and order_list.carlicense=\''.$carlicense.'\'
-		order by or order_list.order_id
+		order by order_list.order_id
 		;';
 	}
 
