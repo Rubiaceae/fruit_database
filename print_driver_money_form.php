@@ -24,7 +24,7 @@ function getlist($list){
 
 
 if(!isset($_GET['driver_id']) && !isset($_GET['date'])) {
-	echo "<h1>選擇要列印表單的日期與貨運行</h1>";
+	echo "<h1>選擇要列印表單的日期與司機</h1>";
 	echo '<form action="print_driver_money_form.php" method="get">';
 		$today = date('Y-m-d' );
 		echo "開始日期 date";
