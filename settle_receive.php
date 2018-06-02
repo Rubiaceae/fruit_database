@@ -40,7 +40,8 @@ function barcode_to_sql($barcode){
 	case 'C':
 		$sql=	'update fruit_database.order_list set consignee_money_settle=now() 
 			where order_list.consignee_id=\''.$id.'\' 
-			and order_list.date between \''.$date.'\' and \''.$enddate.'\' ;';
+			and order_list.date between \''.$date.'\' and \''.$enddate.'\'
+			and order_list.consignee_money_settle is null;';
 		break;
 	}
 	return $sql;
