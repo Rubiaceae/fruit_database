@@ -26,7 +26,7 @@ function barcode_to_sql($barcode){
 	$enddate=addDayswithdate($date,$days);
 	$id=substr($barcode,9,4);
 	switch(strtoupper(substr($barcode,0,1))){
-	case 'O':
+	case 'A':
 		$sql=	'SELECT * FROM fruit_database.order_list
 			left join fruit_database.trucking_list  on trucking_list.trucking_id=order_list.trucking_id 
 			left join fruit_database.consignee_list  on consignee_list.consignee_id=order_list.consignee_id
@@ -83,7 +83,7 @@ if( $_POST['token'] == "xAD5l9weDCqKkYgZNd1ICxn4"){
 	
 	}
 	#單號類型符合
-	if($type != 'O' && $type != 'T' && $type != 'C' && $type != 'D'){
+	if($type != 'A' && $type != 'B' && $type != 'C' && $type != 'D'){
 		echo '錯誤的條碼型態';
 		exit;
 	}
@@ -92,10 +92,10 @@ if( $_POST['token'] == "xAD5l9weDCqKkYgZNd1ICxn4"){
 	
 	#撰寫sql
 	switch($type){
-	case 'O':
+	case 'A':
 		echo '司機送貨條碼<br>';
 		break;
-	case 'T':
+	case 'B':
 		echo '南部代收金條碼<br>';
 		break;
 	case 'C':

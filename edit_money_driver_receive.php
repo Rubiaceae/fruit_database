@@ -5,7 +5,7 @@
 session_start();
 if(!isset($_SESSION['name']) || empty($_SESSION['name'])){
 	echo "尚未登入!";
-	echo "<script>setTimeout(function(){location.href='index.html';},1000);</script><!--五秒後自動回上一頁-->";
+	echo "<script>setTimeout(function(){location.href='index.html';},1000);</script><!--1秒後自動回上一頁-->";
 	exit;
 }
 ?>
@@ -36,7 +36,7 @@ if( $_POST['token'] == "xAD5l9weDCqKkYgZNd1ICxn4"){
 			$sql = 'UPDATE fruit_database.order_list SET driver_money = ('.$driver_money.') WHERE order_id in ('.$order_id.');';
 			echo $sql."</br>";
 			if (mysqli_query($con, $sql)) {
-				echo "driver_money updated successfully!</br>";
+				echo "司機薪水編輯成功!</br>";
 			} else {
 				echo "Error updating record: " . mysqli_error($con);
 			}
@@ -57,7 +57,7 @@ if( $_POST['token'] == "xAD5l9weDCqKkYgZNd1ICxn4"){
 	mysqli_close($con);
     
 }else{
-echo "ERROR! Wrong Station!";
+echo "ERROR! Wrong tokon!";
 }
 
 

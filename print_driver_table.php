@@ -93,8 +93,8 @@ if(!isset($_GET['driver_id']) && !isset($_GET['date'])) {
 	$enddate=$date;
 	$bardate=substr($date,2,2).substr($date,5,2).substr($date,8,2);
 	$bardays=str_pad(((strtotime($enddate) - strtotime($date))/86400),2,'0',STR_PAD_LEFT);
-	$bardriver_id=substr($driver_id,2,2);
-	$barcode="O".$bardate.$bardays.$bardriver_id;
+	$bardriver_id=substr($driver_id,0,4);
+	$barcode="A".$bardate.$bardays.$bardriver_id;
 	echo "<div class=barcode>";
 	echo "	<IMG  SRC=\"barcode.php?barcode=".$barcode."&width=320&height=50\">";
 	echo "</div>";

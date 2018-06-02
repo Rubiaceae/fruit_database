@@ -215,7 +215,7 @@ if(!isset($_GET['consignee_id']) && !isset($_GET['date'])) {
 #	echo "<h2> 運金總額=".$sum_consignee_money."</h2></br>";
 	echo "<h2> 總計=".$sum_money."</h2></br>";
 	$bardate=substr($date,2,2).substr($date,5,2).substr($date,8,2);
-	$bardays=str_pad(((strtotime($enddate) - strtotime($date))/86400),2,'0',STR_PAD_LEFT);;
+	$bardays=str_pad(((strtotime($enddate) - strtotime($date))/86400),2,'0',STR_PAD_LEFT);
 	$barconsignee_id=substr($consignee_id,0,4);
 	$barcode="C".$bardate.$bardays.$barconsignee_id;
 	echo "<div class=barcode>";

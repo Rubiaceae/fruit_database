@@ -1,3 +1,5 @@
+<!--登入頁面的接收，在這一頁編輯帳號密碼，目前登入6000秒
+-->
 <?php
 
 function start_session($expire = 0)
@@ -28,7 +30,7 @@ if(isset($_SESSION['name']) && !empty($_SESSION['name'])) {
 }else{
 	if($_POST['name']=='admin' && $_POST['password']=='pw'){
 		$_SESSION['name']="admin";
-		echo "Login success!, ".$_POST['name'];
+		echo "登入成功! ".$_POST['name'];
 		if(isset( $_SESSION['refurl']) && !empty($_SESSION['refurl'])){
 			echo "<script>setTimeout(function(){location.href='".$_SESSION['refurl']."';},1000);</script><!--五秒後自動回上一頁-->";	
 		}else{
@@ -36,7 +38,7 @@ if(isset($_SESSION['name']) && !empty($_SESSION['name'])) {
 		}
 		
 	}else{
-		echo "Wrong password!";
+		echo "帳號密碼錯誤!";
 		returntoindex(2000);
 	}
 }

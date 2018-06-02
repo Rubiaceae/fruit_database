@@ -1,3 +1,9 @@
+//註解，這是用來處理條碼輸入滿後，自動跳行的程式。
+//條碼長度應為13，
+//1碼格式
+//6碼日期
+//2碼天數
+//4碼員工編號
 var counter = 10;
 var limit = 20;
 function addInput(divName){

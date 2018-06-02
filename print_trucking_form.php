@@ -130,9 +130,9 @@ if(!isset($_GET['trucking_id']) && !isset($_GET['date'])) {
 	if($c >= 2){echo "<h2>注意！車號並不統一！</h2></br>";}
 	echo "<h2> 代收金總額=".$sum_trucking_money."</h2></br>";
 	$bardate=substr($date,2,2).substr($date,5,2).substr($date,8,2);
-	$bardays=str_pad(((strtotime($enddate) - strtotime($date))/86400),2,'0',STR_PAD_LEFT);;
+	$bardays=str_pad(((strtotime($enddate) - strtotime($date))/86400),2,'0',STR_PAD_LEFT);
 	$bartrucking_id=substr($trucking_id,0,4);
-	$barcode="T".$bardate.$bardays.$bartrucking_id;
+	$barcode="B".$bardate.$bardays.$bartrucking_id;
 	echo "<div class=barcode>";
 	echo "	<IMG  SRC=\"barcode.php?barcode=".$barcode."&width=320&height=50\">";
 	echo "</div>";

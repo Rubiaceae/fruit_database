@@ -19,7 +19,7 @@ function getorderlist_withdriver_date($driver_id,$date,$enddate){#查詢所有�
 	if ($result=mysqli_query($con, $sql)) {
 		#echo "Get List successful!";
 	} else {
-		echo "Error Getting List " . mysqli_error($con);
+		echo "取得orderlist_withdriver_date資料錯誤" . mysqli_error($con);
 	}
 	mysqli_close($con);
 	return $result;
@@ -41,7 +41,7 @@ function getorderlist_withdriver_date_money($driver_id,$date,$enddate){#查詢�
 	if ($result=mysqli_query($con, $sql)) {
 		#echo "Get List successful!";
 	} else {
-		echo "Error Getting List " . mysqli_error($con);
+		echo "取得orderlist_withdriver_date_money資料錯誤 " . mysqli_error($con);
 	}
 	mysqli_close($con);
 	return $result;
@@ -58,7 +58,7 @@ function getsum_money($driver_id,$date,$enddate){#查尋特定司機編號與日
 	if ($result=mysqli_query($con, $sql)) {
 		#echo "Get List successful!";
 	} else {
-		echo "Error Getting List " . mysqli_error($con);
+		echo "取得getsum_money資料錯誤 " . mysqli_error($con);
 	}
 	mysqli_close($con);
 	return $result;
@@ -152,7 +152,7 @@ if(!isset($_SESSION['name']) || empty($_SESSION['name'])){
 		if ($result=mysqli_query($con, $sql)) {
 			#echo "Get List successful!";
 		} else {
-			echo "Error Getting List " . mysqli_error($con);
+			echo "取得list資料錯誤 " . mysqli_error($con);
 		}
 		mysqli_close($con);
 		return $result;

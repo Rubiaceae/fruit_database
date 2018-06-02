@@ -14,7 +14,7 @@ function getlist($list){
 	if ($result=mysqli_query($con, $sql)) {
 		#echo "Get List successful!";
 	} else {
-		echo "Error Getting List " . mysqli_error($con);
+		echo "取得list資料錯誤 " . mysqli_error($con);
 	}
 	mysqli_close($con);
 	return $result;
@@ -33,7 +33,7 @@ function getorderlist(){#查詢所有表join，未有司機編號，照行口排
 	if ($result=mysqli_query($con, $sql)) {
 		#echo "Get List successful!";
 	} else {
-		echo "Error Getting List " . mysqli_error($con);
+		echo "取得orderlist資料錯誤 " . mysqli_error($con);
 	}
 	mysqli_close($con);
 	return $result;
@@ -52,7 +52,7 @@ function getorderlist_withdriver(){#查詢所有表join，已有司機編號，�
 	if ($result=mysqli_query($con, $sql)) {
 		#echo "Get List successful!";
 	} else {
-		echo "Error Getting List " . mysqli_error($con);
+		echo "取得orderlist_withdriver資料錯誤 " . mysqli_error($con);
 	}
 	mysqli_close($con);
 	return $result;
@@ -86,6 +86,8 @@ function getorderlist_withdriver(){#查詢所有表join，已有司機編號，�
 <option value="1">1</option>
 <option value="2">2</option>
 <option value="3">3</option>
+<option value="3">4</option>
+<option value="3">5</option>
 <select></br>
 
 
@@ -101,7 +103,7 @@ function getorderlist_withdriver(){#查詢所有表join，已有司機編號，�
 	?>
 </table></br>
 
-<h1>已分配的貨物名單</h1></br>
+<h1>已分配的貨物名單(17小時內)</h1></br>
 <table border=\"1\">
 <tr><td>訂單成立時間</td><td>訂單編號</td><td>訂單日期</td><td>南部貨運商</td><td>車號</td><td>貨主</td><td>品名</td><td>數量</td><td>代收金</td><td>行口</td><td>市場</td><td>司機</td><td>趟次</td><td>派送</td></tr>
 	<?php

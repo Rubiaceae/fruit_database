@@ -1,11 +1,11 @@
-<!--#新增行口編號、司機編號等功能所需要的接收方
+<!--#新增行口編號、司機編號等功能add_new_form.php所需要的接收方
 
 -->
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width">
-	<script>setTimeout(function(){window.location = document.referrer;},5000);</script><!--五秒後自動回上一頁-->
+	<script>setTimeout(function(){window.location = document.referrer;},1500);</script><!--1.5秒後自動回上一頁-->
 
 </head>
 
@@ -23,16 +23,16 @@ if( $_POST['token'] == "xAD5l9weDCqKkYgZNd1ICxn4"){
 	}elseif(!empty($_POST['driver_new'])){
 		$sql = 'INSERT INTO fruit_database.driver_list (`driver`) values("'.$_POST['driver_new'].'")';
 	}else{	
-	echo "post error";
+	echo "POST內容有誤";
 	}
 
 
 	
 	include("mysql_connect.inc.php");
 	if (mysqli_query($con, $sql)) {
-		echo "New member info updated successfully!</br>";
+		echo "資料新增完畢，1秒後跳回上一頁!</br>";
 	} else {
-		echo "Error updating record: " . mysqli_error($con);
+		echo "資料新增錯誤: " . mysqli_error($con);
 	}
 	mysqli_close($con);
 

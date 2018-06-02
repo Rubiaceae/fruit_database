@@ -1,4 +1,4 @@
-<!--#新增行口編號、司機編號等功能所需要的接收方
+<!--#新增行口運金的接收方
 
 -->
 <?php
@@ -36,7 +36,7 @@ if( $_POST['token'] == "xAD5l9weDCqKkYgZNd1ICxn4"){
 			$sql = 'UPDATE fruit_database.order_list SET consignee_money = ('.$consignee_money.') WHERE order_id in ('.$order_id.');';
 			echo $sql."</br>";
 			if (mysqli_query($con, $sql)) {
-				echo "consignee_money updated successfully!</br>";
+				echo "行口運金編輯成功!</br>";
 			} else {
 				echo "Error updating record: " . mysqli_error($con);
 			}
@@ -57,7 +57,7 @@ if( $_POST['token'] == "xAD5l9weDCqKkYgZNd1ICxn4"){
 	mysqli_close($con);
     
 }else{
-echo "ERROR! Wrong Station!";
+echo "ERROR! Wrong tokon!";
 }
 
 

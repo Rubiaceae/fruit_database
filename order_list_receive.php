@@ -2,7 +2,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width">
-	<script>setTimeout(function(){window.location = document.referrer;},5000);</script><!--五秒後自動回上一頁-->
+	<script>setTimeout(function(){window.location = document.referrer;},3000);</script><!--3秒後自動回上一頁-->
 </head>
 
 
@@ -33,7 +33,7 @@ if( $_POST['token'] == "xAD5l9weDCqKkYgZNd1ICxn4"){
 	include("mysql_connect.inc.php");
 
 	if (mysqli_query($con, $sql)) {
-		echo $station." info updated successfully!</br>";
+		echo "訂單新增成功!</br>";
 	} else {
 		echo "Error updating record: " . mysqli_error($con);
 	}
@@ -53,7 +53,7 @@ if( $_POST['token'] == "xAD5l9weDCqKkYgZNd1ICxn4"){
 
     
 }else{
-	echo "ERROR! Wrong Station!";
+	echo "ERROR! Wrong token!";
 }
 	echo $sql;
 ?>

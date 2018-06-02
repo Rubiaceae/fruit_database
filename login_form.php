@@ -1,3 +1,9 @@
+<!--登入的頁面
+沒有登入就顯示登入頁面
+已登入就顯示已登入
+
+-->
+
 <?php
 
 function start_session($expire = 0)

@@ -1,5 +1,6 @@
 <!--#新增行口編號、司機編號等功能所需要的表單，會有新增的選項，並列出已有的
-
+目前只能新增三種，南部貨運行、北部行口(包含市場位置)、司機
+南部貨主無法新增，因為數量太大，目前只能使用手動輸入的
 -->
 <html>
 <head>
@@ -118,7 +119,7 @@ echo "</table></br>\n";
 
 ?>
 
-
+<input type ="button" onclick="javascript:location.href='index.html'" value="回首頁"></input>
 </body>
 </html>
 

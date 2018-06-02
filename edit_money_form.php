@@ -1,4 +1,4 @@
-<!--#分配訂單的金錢，包括行口與司機的
+<!--#分配訂單的運金
 
 -->
 
@@ -19,7 +19,7 @@ function getorderlist_withconsignee_date($consignee_id,$date,$enddate){#查詢�
 	if ($result=mysqli_query($con, $sql)) {
 		#echo "Get List successful!";
 	} else {
-		echo "Error Getting List " . mysqli_error($con);
+		echo "取得orderlist_withconsignee_date資料錯誤" . mysqli_error($con);
 	}
 	mysqli_close($con);
 	return $result;
@@ -41,7 +41,7 @@ function getorderlist_withconsignee_date_money($consignee_id,$date,$enddate){#�
 	if ($result=mysqli_query($con, $sql)) {
 		#echo "Get List successful!";
 	} else {
-		echo "Error Getting List " . mysqli_error($con);
+		echo "取得orderlist_withconsignee_date_money資料錯誤 " . mysqli_error($con);
 	}
 	mysqli_close($con);
 	return $result;
@@ -59,7 +59,7 @@ function getsum_money($consignee_id,$date,$enddate){#查尋特定行口編號與
 	if ($result=mysqli_query($con, $sql)) {
 		#echo "Get List successful!";
 	} else {
-		echo "Error Getting List " . mysqli_error($con);
+		echo "取得getsum_money資料錯誤" . mysqli_error($con);
 	}
 	mysqli_close($con);
 	return $result;
@@ -251,7 +251,7 @@ if(!isset($_SESSION['name']) || empty($_SESSION['name'])){
 		if ($result=mysqli_query($con, $sql)) {
 			#echo "Get List successful!";
 		} else {
-			echo "Error Getting List " . mysqli_error($con);
+			echo "取得list資料錯誤 " . mysqli_error($con);
 		}
 		mysqli_close($con);
 		return $result;

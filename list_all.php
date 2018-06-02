@@ -1,3 +1,6 @@
+<!--#所有訂單列表，每頁可以查20行
+
+-->
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -23,7 +26,7 @@
 		if ($result=mysqli_query($con, $sql)) {
 			#echo "Get List successful!";
 		} else {
-			echo "Error Getting List " . mysqli_error($con);
+			echo "查詢List資料失敗 " . mysqli_error($con);
 		}
 		mysqli_close($con);
 		return $result;

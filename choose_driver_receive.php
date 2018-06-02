@@ -37,12 +37,12 @@ if( $_POST['token'] == "xAD5l9weDCqKkYgZNd1ICxn4"){
     	echo $sql2."</br>";
 
 	if (mysqli_query($con, $sql)) {
-		echo "driver_id updated successfully!</br>";
+		echo "分派司機成功!</br>";
 	} else {
 		echo "Error updating record: " . mysqli_error($con);
 	}
 	if (mysqli_query($con, $sql2)) {
-		echo "driver_trip updated successfully!</br>";
+		echo "分派司機趟次成功!</br>";
 	} else {
 		echo "Error updating record: " . mysqli_error($con);
 	}
