@@ -16,7 +16,7 @@ if( $_POST['token'] == "xAD5l9weDCqKkYgZNd1ICxn4"){
 
 	$date = $_POST['date'];
 	$trucking_id = $_POST['trucking_id'];
-	$carlicense = $_POST['carlicense'];
+	$carlicense = strtoupper($_POST['carlicense']);
 #	$shipper_id=$_POST['shipper_id'];
 	$shipper=$_POST['shipper'];
 	$product=$_POST['product'];

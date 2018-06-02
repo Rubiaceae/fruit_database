@@ -156,7 +156,7 @@ echo "<td>	  <input type=\"date\" name=\"date\" value=\"".$today."\">";
 
 <tr>
 	<td >車號 carlicense</td> 
-	<td >	<input type="text" name="carlicense" maxlength="7" size="7"><br>
+	<td >	<input type="text" name="carlicense" maxlength="8" size="8"><br>
 	</td>
 </tr>
 
