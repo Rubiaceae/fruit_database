@@ -5,7 +5,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width">
 	<link rel="stylesheet" type="text/css" href="theme.css">
-	<script src="http://127.0.0.1/jquery.min.js"></script>
+	<script src="http://140.112.57.110/jquery.min.js"></script>
 
         <script>
 		$(document).ready(function(){

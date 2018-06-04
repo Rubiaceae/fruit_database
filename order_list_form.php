@@ -10,7 +10,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>新增訂單</title>
 	<link rel="stylesheet" href="udform.css">
-	<script src="http://127.0.0.1/jquery.min.js"></script>
+	<script src="http://140.112.57.110/jquery.min.js"></script>
 
         <script>
             $(document).ready(function(){
