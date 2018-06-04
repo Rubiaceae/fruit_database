@@ -6,6 +6,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width">
 	<link rel="stylesheet" type="text/css" href="theme.css">
+	<title>列印司機貨物清單</title>
 </head>
 <body >
 <?php
