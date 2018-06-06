@@ -34,7 +34,7 @@ $(document).ready(function() {
 </head>
 
 <body >
-
+<input type ="button" onclick="javascript:location.href='index.html'" value="回首頁"></input>
 
 
 <table id="example" class="display compact">
