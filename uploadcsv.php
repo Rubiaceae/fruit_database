@@ -57,11 +57,32 @@ function getconsigneeid(){
 
 };
 
+function utf8_fopen_read($fileName) { 
+	$contents = file_get_contents("upload/uploaded_file.txt");
+	$encoding =mb_detect_encoding($contents, array("BIG5","ASCII","UTF-8","GB2312","GBK"), true) ;
+	echo "encoding:".$encoding."<br />";
+	if ($encoding != false) {
+		#$contents = iconv($encoding, 'UTF-8', $contents);
+		$fc = iconv($encoding, "UTF-8",$contents); 
+		#echo $fc;
+		$handle=fopen($fileName, "w"); 
+		fwrite($handle, $fc); 
+		fseek($handle, 0); 
+		fclose($handle); 
+	} else {
+	 	$fc = mb_convert_encoding($contents, 'UTF-8','auto');
+		#echo $fc;
+		$handle=fopen($fileName, "w"); 
+		fwrite($handle, $fc); 
+		fseek($handle, 0); 
+		fclose($handle); 
+	}
+};
 
 
 
 function showcsv($storagename){
-	if ( $file = fopen( "upload/" . $storagename , r ) ) {
+	if ( $file = fopen(  $storagename , "r" ) ) {
 		$result=gettruckingid();
 		$truckingid=mysqltoarray($result);
 		$result=getconsigneeid();
@@ -203,6 +224,7 @@ function showcsv($storagename){
 		}
 
 		echo "</form>";
+		fclose($file);
 	}
 }
 ?>
@@ -222,7 +244,7 @@ function showcsv($storagename){
 
 	</form>
 </table>
-<input type ="button" onclick="javascript:location.href='index.html'" value="回首頁"></input>
+<input type ="button" onclick="javascript:location.href='index.html'" value="回首頁"></input></br>
 
 <?php
 if ( isset($_POST["submit"]) ) {
@@ -247,9 +269,14 @@ if ( isset($_POST["submit"]) ) {
 			 }
 			 else {
 					//Store file in directory "upload" with the name of "uploaded_file.txt"
-			$storagename = "uploaded_file.txt";
-			move_uploaded_file($_FILES["file"]["tmp_name"], "upload/" . $storagename);
+			$storagename = "upload/uploaded_file.txt";
+			move_uploaded_file($_FILES["file"]["tmp_name"], $storagename);
 			echo "Stored in: " . "upload/" . $_FILES["file"]["name"] . "<br />";
+			echo $storagename."<br />";
+			#echo mb_detect_encoding("12342523eg", array("ASCII","UTF-8","GB2312","GBK","BIG5"), true) ;
+			utf8_fopen_read($storagename);
+			//偵測並轉換編碼
+			#echo file_get_contents($storagename);
 			showcsv($storagename);
 			
 

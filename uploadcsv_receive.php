@@ -1,5 +1,5 @@
 <!--#新增行口運金的接收方
-
+<script>setTimeout(function(){window.location = document.referrer;},3000);</script><!--3秒後自動回上一頁-->
 -->
 <?php
 #session_start();
@@ -8,6 +8,8 @@
 #	echo "<script>setTimeout(function(){location.href='index.html';},1000);</script><!--五秒後自動回上一頁-->";
 #	exit;
 #}
+
+
 ?>
 
 
@@ -15,7 +17,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width">
-	<script>setTimeout(function(){window.location = document.referrer;},2000);</script><!--2秒後自動回上一頁-->
+	
 </head>
 
 
