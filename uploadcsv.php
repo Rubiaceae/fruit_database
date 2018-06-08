@@ -230,6 +230,7 @@ function showcsv($storagename){
 ?>
 
 <table width="600">
+	<h1>上傳CSV檔案</h1>
 	<form action="/uploadcsv.php" method="post" enctype="multipart/form-data">
 
 	<tr>
@@ -258,26 +259,30 @@ if ( isset($_POST["submit"]) ) {
 		}
 		else {
 				 //Print file details
-			 echo "Upload: " . $_FILES["file"]["name"] . "<br />";
-			 echo "Type: " . $_FILES["file"]["type"] . "<br />";
-			 echo "Size: " . ($_FILES["file"]["size"] / 1024) . " Kb<br />";
-			 echo "Temp file: " . $_FILES["file"]["tmp_name"] . "<br />";
+			echo "Upload: " . $_FILES["file"]["name"] . "<br />";
+			echo "Type: " . $_FILES["file"]["type"] . "<br />";
+			echo "Size: " . ($_FILES["file"]["size"] / 1024) . " Kb<br />";
+			echo "Temp file: " . $_FILES["file"]["tmp_name"] . "<br />";
 
 				 //if file already exists
-			 if (file_exists("upload/" . $_FILES["file"]["name"])) {
-			echo $_FILES["file"]["name"] . " already exists. ";
-			 }
-			 else {
+			if (file_exists("upload/" . $_FILES["file"]["name"])) {
+				echo $_FILES["file"]["name"] . " already exists. ";
+			}
+			else {
 					//Store file in directory "upload" with the name of "uploaded_file.txt"
-			$storagename = "upload/uploaded_file.txt";
-			move_uploaded_file($_FILES["file"]["tmp_name"], $storagename);
-			echo "Stored in: " . "upload/" . $_FILES["file"]["name"] . "<br />";
-			echo $storagename."<br />";
-			#echo mb_detect_encoding("12342523eg", array("ASCII","UTF-8","GB2312","GBK","BIG5"), true) ;
-			utf8_fopen_read($storagename);
-			//偵測並轉換編碼
-			#echo file_get_contents($storagename);
-			showcsv($storagename);
+				$storagename = "upload/uploaded_file.txt";
+				move_uploaded_file($_FILES["file"]["tmp_name"], $storagename);
+				echo "Stored in: " . "upload/" . $_FILES["file"]["name"] . "<br />";
+				echo $storagename."<br />";
+				#echo mb_detect_encoding("12342523eg", array("ASCII","UTF-8","GB2312","GBK","BIG5"), true) ;
+				if($_FILES["file"]["type"] != "text/csv"){
+					echo "錯誤！不是CSV檔。";
+					exit;
+				}
+				utf8_fopen_read($storagename);
+				//偵測並轉換編碼
+				#echo file_get_contents($storagename);
+				showcsv($storagename);
 			
 
 			
