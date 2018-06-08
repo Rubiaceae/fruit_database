@@ -69,6 +69,10 @@
 		var inptrip = $('#inptrip').val().replace(/\s/g, '');
 	 	var trip = data[14].replace(/\s/g, '');
 
+		var mindm = parseInt( $('#mindm').val(), 10 );
+		var maxdm = parseInt( $('#maxdm').val(), 10 );
+		var drivermoney = parseFloat( data[15] ) || 0; // use data for the age column
+
 		if (inptimestamp === "" || timestamp.includes(inptimestamp)){
 			if(inpdate === "" || date.includes(inpdate)){
 				if( (inptrucking === "")  || ( trucking.includes(inptrucking))){
@@ -92,7 +96,12 @@
 													if( (inpstation === "")  || ( station.includes(inpstation))){
 														if( (inpdriver === "")  || ( driver.includes(inpdriver))){
 															if( (inptrip === "")  || ( trip.includes(inptrip))){
-																return true;
+																if ( ( isNaN( mindm ) && isNaN( maxdm ) )	||
+																( isNaN( mindm ) && drivermoney <= maxdm ) ||
+																( mindm <= drivermoney   && isNaN( maxdm ) ) ||
+																( mindm <= drivermoney   && drivermoney <= maxdm ) ){
+																	return true;
+																}
 															}
 														}
 													}
@@ -117,7 +126,7 @@
 	    var table = $('#example').DataTable();
 	     
 	    // Event listener to the two range filtering inputs to redraw on input
-	    $('#inptimestamp,#inpdate,#inptrucking,#inpcarlicense,#inpshipper,#inpproduce,#minq,#maxq,#mintm,#maxtm,#mincm,#maxcm,#inpconsignee,#inpstation,#inpdriver,#inptrip').keyup( function() {
+	    $('#inptimestamp,#inpdate,#inptrucking,#inpcarlicense,#inpshipper,#inpproduce,#minq,#maxq,#mintm,#maxtm,#mincm,#maxcm,#inpconsignee,#inpstation,#inpdriver,#inptrip,#mindm,#maxdm').keyup( function() {
 		table.draw();
 	    } );
 	} );
@@ -155,6 +164,8 @@
 		<td>市場:</td>
 		<td>司機:</td>
 		<td>趟次:</td>
+		<td>最小司機薪水金額:</td>
+		<td>最大司機薪水金額:</td>
         </tr>
 	<tr>
 		<td><input type="text" id="inptimestamp" name="inptimestamp" size="10"></td>
@@ -173,6 +184,8 @@
 		<td><input type="text" id="inpstation" name="inpstation" size="5" ></td>
 		<td><input type="text" id="inpdriver" name="inpdriver" size="5" ></td>
 		<td><input type="text" id="inptrip" name="inptrip" size="3" ></td>
+		<td><input type="text" id="mindm" name="mindm" size="5" ></td>
+		<td><input type="text" id="maxdm" name="maxdm" size="5" ></td>
         </tr>
 	</tbody>
 </table>
@@ -203,11 +216,11 @@
 
 $result=getorderlist();
 
-echo "<thead><tr><td>項次</td><td>訂單成立時間</td><td>訂單編號</td><td>訂單日期</td><td>南部貨運商</td><td>車號</td><td>貨主</td><td>品名</td><td>數量</td><td>代收金</td><td>運金</td><td>行口</td><td>市場</td><td>司機</td><td>趟次</td><td>確認出貨</td><td>確認付代收金</td><td>確認收運金</td><td>確認付司機薪水</td></tr></thead>";
+echo "<thead><tr><td>項次</td><td>訂單成立時間</td><td>訂單編號</td><td>訂單日期</td><td>南部貨運商</td><td>車號</td><td>貨主</td><td>品名</td><td>數量</td><td>代收金</td><td>運金</td><td>行口</td><td>市場</td><td>司機</td><td>趟次</td><td>司機薪水</td><td>確認出貨</td><td>確認付代收金</td><td>確認收運金</td><td>確認付司機薪水</td></tr></thead>";
 echo "<tbody>";
 	while($row = $result->fetch_array())
 	{	$i=$i+1;
-		echo  "<tr><td>".$i."</td><td>".$row['timestamp']."</td><td>".$row['order_id']."</td><td>".$row['date']."</td><td>".$row['trucking']."</td><td>".$row['carlicense']."</td><td>".$row['shipper']."</td><td>".$row['product']."</td><td>".$row['quantity']."</td><td>".$row['trucking_money']."</td><td>".$row['consignee_money']."</td>\n<td>".$row['consignee']."</td><td>".$row['station']."</td><td>".$row['driver']."</td><td>".$row['driver_trip']."</td><td>".$row['order_settle']."</td><td>".$row['trucking_money_settle']."</td><td>".$row['consignee_money_settle']."</td><td>".$row['driver_money_settle']."</td></tr>\n";
+		echo  "<tr><td>".$i."</td><td>".$row['timestamp']."</td><td>".$row['order_id']."</td><td>".$row['date']."</td><td>".$row['trucking']."</td><td>".$row['carlicense']."</td><td>".$row['shipper']."</td><td>".$row['product']."</td><td>".$row['quantity']."</td><td>".$row['trucking_money']."</td><td>".$row['consignee_money']."</td>\n<td>".$row['consignee']."</td><td>".$row['station']."</td><td>".$row['driver']."</td><td>".$row['driver_trip']."</td><td>".$row['driver_money']."</td><td>".$row['order_settle']."</td><td>".$row['trucking_money_settle']."</td><td>".$row['consignee_money_settle']."</td><td>".$row['driver_money_settle']."</td></tr>\n";
 	}
 
 echo "</tbody>";
