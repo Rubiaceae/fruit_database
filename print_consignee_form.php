@@ -129,6 +129,7 @@ if(!isset($_GET['consignee_id']) && !isset($_GET['date'])) {
 #			echo "\t\t<option value=\"".$row['consignee_id']."\">".$row['consignee']."</option>\n";
 #		}
 #		echo "<select></br>";
+		echo '代收金與運金合併<input type="checkbox" name="tm_cm_combin" value="1"></br>';
 		echo '<input type="submit" value="送出表單">';
 		echo '<input type="reset" value="清除表單">';
 		echo '<input type ="button" onclick="javascript:location.href=\'index.html\'" value="回首頁"></input>';
@@ -181,47 +182,96 @@ if(!isset($_GET['consignee_id']) && !isset($_GET['date'])) {
 
 
 #html開始
-	echo "<div class=\"print_table\">";
-	echo "<h1>出貨明細表</h1>";
-	echo "<h2><p id=data></p></h2>\n";
-	echo "<h2><p id=data2></p></h2>\n";
-	echo "<table id=table border=\"1\">\n";
-	echo "<tr><td>項目</td><td>訂單編號</td><td>訂單日期</td><td width='60'>車號</td><td>貨主</td><td width='60'>品名</td><td>數量</td><td>代收金</td><td>運金</td><td>行口</td><td>市場</td></tr>";
-	$i=0;
+	if(!isset($_GET['tm_cm_combin'])){//運金跟代收金分開
+		echo "<div class=\"print_table\">";
+		echo "<h1>出貨明細表</h1>";
+		echo "<h2><p id=data></p></h2>\n";
+		echo "<h2><p id=data2></p></h2>\n";
+		echo "<table id=table border=\"1\">\n";
+		echo "<tr><td>項目</td><td>訂單編號</td><td>訂單日期</td><td width='60'>車號</td><td>貨主</td><td width='60'>品名</td><td>數量</td><td>代收金</td><td>運金</td><td>行口</td><td>市場</td></tr>";
+		$i=0;
 
-	while($row = $result->fetch_array())
-	{
-		$i=$i+1;
-		echo "<tr> <td>" . $i . "</td><td>" . $row['order_id'] . "</td><td>" . $row['date'] . "</td><td>" . $row['carlicense'] . "</td><td>".$row['shipper'] . "</td><td>".$row['product'] . "</td><td>".$row['quantity'] . "</td><td>".$row['trucking_money'] . "</td><td>".$row['consignee_money'] . "</td><td>".$row['consignee'] . "</td><td>".$row['station'] . "</td></tr>\n";
-	$consignee=$row['consignee'];
+		while($row = $result->fetch_array())
+		{
+			$i=$i+1;
+			echo "<tr> <td>" . $i . "</td><td>" . $row['order_id'] . "</td><td>" . $row['date'] . "</td><td>" . $row['carlicense'] . "</td><td>".$row['shipper'] . "</td><td>".$row['product'] . "</td><td>".$row['quantity'] . "</td><td>".$row['trucking_money'] . "</td><td>".$row['consignee_money'] . "</td><td>".$row['consignee'] . "</td><td>".$row['station'] . "</td></tr>\n";
+		$consignee=$row['consignee'];
 
-	$carlicense=$row['carlicense'];
+		$carlicense=$row['carlicense'];
 		
-	$sum_trucking_money=$sum_trucking_money+$row['trucking_money'];
-	$sum_consignee_money=$sum_consignee_money+$row['consignee_money'];
-	$station=$row['station'];	
-	};
-	echo "</table></br>\n";
-	$data="開始日期: ".$date." 結束日期: ".$enddate;
-	$data2="行口: ".$consignee." \t市場: ".$station;
-	echo "<script>";
-	echo "document.getElementById(\"data\").innerHTML = '".$data."';";
-	echo "document.getElementById(\"data2\").innerHTML = '".$data2."';";
-	echo "</script>"; 
-	$sum_money=intval($sum_trucking_money)+intval($sum_consignee_money);
-	$text="<h2> 代收金總額 = ".$sum_trucking_money." 運金總額 = ".$sum_consignee_money."</h2>";
-	echo $text;
-#	echo "<h2> 代收金總額=".$sum_trucking_money."</h2></br>";
-#	echo "<h2> 運金總額=".$sum_consignee_money."</h2></br>";
-	echo "<h2> 總計=".$sum_money."</h2></br>";
-	$bardate=substr($date,2,2).substr($date,5,2).substr($date,8,2);
-	$bardays=str_pad(((strtotime($enddate) - strtotime($date))/86400),2,'0',STR_PAD_LEFT);
-	$barconsignee_id=substr($consignee_id,0,4);
-	$barcode="C".$bardate.$bardays.$barconsignee_id;
-	echo "<div class=barcode>";
-	echo "	<IMG  SRC=\"barcode.php?barcode=".$barcode."&width=320&height=50\">";
-	echo "</div>";
-	echo "</div>";
+		$sum_trucking_money=$sum_trucking_money+$row['trucking_money'];
+		$sum_consignee_money=$sum_consignee_money+$row['consignee_money'];
+		$station=$row['station'];	
+		};
+		echo "</table></br>\n";
+		$data="開始日期: ".$date." 結束日期: ".$enddate;
+		$data2="行口: ".$consignee." \t市場: ".$station;
+		echo "<script>";
+		echo "document.getElementById(\"data\").innerHTML = '".$data."';";
+		echo "document.getElementById(\"data2\").innerHTML = '".$data2."';";
+		echo "</script>"; 
+		$sum_money=intval($sum_trucking_money)+intval($sum_consignee_money);
+		$text="<h2> 代收金總額 = ".$sum_trucking_money." 運金總額 = ".$sum_consignee_money."</h2>";
+		echo $text;
+	#	echo "<h2> 代收金總額=".$sum_trucking_money."</h2></br>";
+	#	echo "<h2> 運金總額=".$sum_consignee_money."</h2></br>";
+		echo "<h2> 總計=".$sum_money."</h2></br>";
+		$bardate=substr($date,2,2).substr($date,5,2).substr($date,8,2);
+		$bardays=str_pad(((strtotime($enddate) - strtotime($date))/86400),2,'0',STR_PAD_LEFT);
+		$barconsignee_id=substr($consignee_id,0,4);
+		$barcode="C".$bardate.$bardays.$barconsignee_id;
+		echo "<div class=barcode>";
+		echo "	<IMG  SRC=\"barcode.php?barcode=".$barcode."&width=320&height=50\">";
+		echo "</div>";
+		echo "</div>";
+	}else{//運金跟代收金合併
+		echo "<div class=\"print_table\">";
+		echo "<h1>出貨明細表</h1>";
+		echo "<h2><p id=data></p></h2>\n";
+		echo "<h2><p id=data2></p></h2>\n";
+		echo "<table id=table border=\"1\">\n";
+		echo "<tr><td>項目</td><td>訂單編號</td><td>訂單日期</td><td width='60'>車號</td><td>貨主</td><td width='60'>品名</td><td>數量</td><td>費用</td><td>行口</td><td>市場</td></tr>";
+		$i=0;
+
+		while($row = $result->fetch_array())
+		{
+			$consignee=$row['consignee'];
+			$carlicense=$row['carlicense'];
+			$sum_trucking_money=$sum_trucking_money+$row['trucking_money'];
+			$sum_consignee_money=$sum_consignee_money+$row['consignee_money'];
+			$station=$row['station'];	
+			$fee=$row['trucking_money']+$row['consignee_money'];
+			$i=$i+1;
+			echo "<tr> <td>" . $i . "</td><td>" . $row['order_id'] . "</td><td>" . $row['date'] . "</td><td>" . $row['carlicense'] . "</td><td>".$row['shipper'] . "</td><td>".$row['product'] . "</td><td>".$row['quantity'] . "</td><td>".$fee. "</td><td>".$row['consignee'] . "</td><td>".$row['station'] . "</td></tr>\n";
+
+		
+
+		};
+		echo "</table></br>\n";
+		$data="開始日期: ".$date." 結束日期: ".$enddate;
+		$data2="行口: ".$consignee." \t市場: ".$station;
+		echo "<script>";
+		echo "document.getElementById(\"data\").innerHTML = '".$data."';";
+		echo "document.getElementById(\"data2\").innerHTML = '".$data2."';";
+		echo "</script>"; 
+		$sum_money=intval($sum_trucking_money)+intval($sum_consignee_money);
+	#	$text="<h2> 代收金總額 = ".$sum_trucking_money." 運金總額 = ".$sum_consignee_money."</h2>";
+		echo $text;
+	#	echo "<h2> 代收金總額=".$sum_trucking_money."</h2></br>";
+	#	echo "<h2> 運金總額=".$sum_consignee_money."</h2></br>";
+		echo "<h2> 總計=".$sum_money."</h2></br>";
+		$bardate=substr($date,2,2).substr($date,5,2).substr($date,8,2);
+		$bardays=str_pad(((strtotime($enddate) - strtotime($date))/86400),2,'0',STR_PAD_LEFT);
+		$barconsignee_id=substr($consignee_id,0,4);
+		$barcode="C".$bardate.$bardays.$barconsignee_id;
+		echo "<div class=barcode>";
+		echo "	<IMG  SRC=\"barcode.php?barcode=".$barcode."&width=320&height=50\">";
+		echo "</div>";
+		echo "</div>";
+
+
+	}
+	
 }
 ?>
 
